@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Microsoft Mastery Hub | Unleash Your Workflow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1E3A8A; /* Deep Cosmic Blue */
+            --secondary: #EC4899; /* Vibrant Cosmic Pink */
+            --accent: #60A5FA; /* Light Nebula Blue */
+            --light-accent: #F9A8D4; /* Soft Nebula Pink */
+            --background: #F8FAFC; /* Slate White */
+            --text-light: #1E3A8A; /* Deep Cosmic Blue */
+            --text-dark: #1E3A8A;
+            --text-dim: rgba(30, 58, 138, 0.85);
+            --glass: rgba(255, 255, 255, 0.2);
+            --glass-hover: rgba(255, 255, 255, 0.3);
+            --shadow: rgba(0, 0, 0, 0.1);
+            --glow: rgba(236, 72, 153, 0.6);
+            --star-glow: rgba(255, 255, 255, 0.8);
+        }
+
+        [data-theme="night"] {
+            --primary: #3B82F6; /* Brighter Blue */
+            --secondary: #F472B6; /* Softer Pink */
+            --accent: #93C5FD; /* Lighter Nebula Blue */
+            --light-accent: #FBCFE8; /* Lighter Soft Pink */
+            --background: #0F172A; /* Dark Cosmic Background */
+            --text-light: #F8FAFC; /* Light Text */
+            --text-dark: #1E3A8A;
+            --text-dim: rgba(248, 250, 252, 0.85);
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.2);
+            --shadow: rgba(0, 0, 0, 0.2);
+            --glow: rgba(236, 72, 153, 0.6);
+            --star-glow: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Cinzel', 'Inter', serif;
+            background: var(--background);
+            color: var(--text-light);
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .cosmic-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, rgba(96, 165, 250, 0.2) 0%, var(--background) 70%);
+            overflow: hidden;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: var(--star-glow);
+            border-radius: 50%;
+            animation: twinkle 5s ease-in-out infinite;
+        }
+
+        .nebula {
+            position: absolute;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: nebulaDrift 30s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes nebulaDrift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-toggle:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .mode-toggle i {
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 1;
+            padding-bottom: 80px;
+            width: 100%;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 120px 20px 60px;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.5)); }
+            100% { filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.8)); }
+        }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            opacity: 0.9;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: visible;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .tool-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 8px 30px var(--shadow);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        [data-theme="night"] .tool-card {
+            border-color: var(--secondary);
+            box-shadow: 0 8px 30px var(--shadow), 0 0 10px var(--glow);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.5);
+            border-color: var(--secondary);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tool-icon {
+            font-size: 2.2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px var(--glow);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .tool-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .tool-description {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .tool-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--secondary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 15;
+        }
+
+        .tool-link:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+            text-decoration: underline;
+        }
+
+        .detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            z-index: 1002;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .detail-container {
+            background: linear-gradient(135deg, var(--glass), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--secondary);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 30px var(--shadow);
+            position: relative;
+            color: var(--text-light);
+            animation: fadeInUp 0.5s ease;
+            scroll-behavior: auto;
+            z-index: 1003;
+        }
+
+        .detail-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .detail-container::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+
+        .detail-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 24px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .detail-content {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        .detail-section {
+            margin-bottom: 32px;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: background 0.3s ease;
+        }
+
+        .detail-section:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-subheader {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .detail-subheader::after {
+            content: '';
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            border-radius: 1px;
+        }
+
+        .detail-list {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .detail-list li {
+            position: relative;
+            margin-bottom: 12px;
+            padding-left: 20px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            line-height: 1.7;
+            transition: color 0.3s ease;
+        }
+
+        .detail-list li:hover {
+            color: var(--secondary);
+        }
+
+        .detail-list li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .detail-list li strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .note {
+            background: rgba(236, 72, 153, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .note-tip::before {
+            content: '\f0eb';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .note-warning::before {
+            content: '\f071';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #EF5350;
+            font-size: 1.2rem;
+        }
+
+        .note-shortcut::before {
+            content: '\f11c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1004;
+        }
+
+        .close-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--glow);
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            background: var(--glass);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--secondary);
+            background: var(--glass-hover);
+            outline: none;
+        }
+
+        footer {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-top: 2px solid var(--secondary);
+            padding: 20px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-top: 40px;
+            z-index: 10;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                padding: 120px 15px 50px;
+            }
+
+            .hero-title {
+                font-size: clamp(2.5rem, 6vw, 4rem);
+            }
+
+            .tool-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            .detail-container {
+                padding: 30px;
+                max-width: 700px;
+                max-height: 85vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 15px 40px;
+            }
+
+            .hero-title {
+                font-size: clamp(2rem, 5vw, 3.5rem);
+            }
+
+            .section-title {
+                font-size: clamp(1.8rem, 4vw, 2rem);
+            }
+
+            .detail-container {
+                padding: 20px;
+                max-width: 90%;
+                max-height: 90vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-card {
+                padding: 20px;
+            }
+
+            .tool-title {
+                font-size: 1.4rem;
+            }
+
+            .detail-container {
+                padding: 16px;
+                max-width: 95%;
+            }
+
+            .close-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            opacity: 1;
+            transform: translateY(0);
+            animation: none;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="cosmic-background">
+        <div class="stars" id="stars"></div>
+    </div>
+
+   <div class="mode-toggle">
+    <i class="fas fa-sun"></i>
+</div>
+
+    <div class="main-container">
+        <section class="hero">
+            <h1 class="hero-title">Microsoft Mastery Hub</h1>
+            <p class="hero-subtitle">Unlock the full potential of Microsoft 365 for productivity and creativity</p>
+        </section>
+
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="search" placeholder="Search tools..." oninput="searchTools()">
+            </div>
+
+            <section class="section" id="tools">
+                <h2 class="section-title">Master Microsoft Tools</h2>
+                <div class="tool-grid">
+                    <div class="tool-card fade-in-up" data-tool="word">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-file-word"></i></div>
+                            <h3 class="tool-title">Microsoft Word</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Craft professional documents with advanced formatting and collaboration tools.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('word')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="powerpoint">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-file-powerpoint"></i></div>
+                            <h3 class="tool-title">PowerPoint</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Create captivating presentations with dynamic visuals and AI-driven design.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('powerpoint')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="excel">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-file-excel"></i></div>
+                            <h3 class="tool-title">Excel</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Analyze and visualize data with powerful spreadsheet tools.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('excel')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="teams">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-users"></i></div>
+                            <h3 class="tool-title">Teams</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Collaborate seamlessly with chat, meetings, and app integrations.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('teams')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="outlook">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-envelope"></i></div>
+                            <h3 class="tool-title">Outlook</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Manage emails, calendars, and tasks with smart organization features.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('outlook')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="onenote">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-sticky-note"></i></div>
+                            <h3 class="tool-title">OneNote</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Organize ideas in a flexible, cross-device digital notebook.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('onenote')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="access">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-database"></i></div>
+                            <h3 class="tool-title">Access</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Build and manage databases for efficient data handling.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('access')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="publisher">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-desktop"></i></div>
+                            <h3 class="tool-title">Publisher</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Design professional publications like brochures and newsletters.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('publisher')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="forms">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-poll"></i></div>
+                            <h3 class="tool-title">Forms</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Create surveys and quizzes with real-time response tracking.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('forms')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="powerbi">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-chart-bar"></i></div>
+                            <h3 class="tool-title">Power BI</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Visualize complex data with interactive dashboards and reports.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('powerbi')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up" data-tool="planner">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-tasks"></i></div>
+                            <h3 class="tool-title">Planner</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Manage tasks and projects with team collaboration tools.</p>
+                            <a href="#" class="tool-link" onclick="toggleDetail('planner')">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="power-tips">
+                <h2 class="section-title">Power Tips for Productivity</h2>
+                <div class="tool-grid">
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-bolt"></i></div>
+                            <h3 class="tool-title">Automation Hacks</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Streamline repetitive tasks with macros in Excel, Quick Steps in Outlook, and Power Automate flows.</p>
+                            <div class="note note-tip"><span>Leverage Power Automate to create automated workflows, such as sending email notifications when a Planner task is completed, saving hours on repetitive tasks.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-lightbulb"></i></div>
+                            <h3 class="tool-title">Collaboration Boost</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Enhance teamwork with real-time co-authoring in Word, Excel, and PowerPoint via OneDrive.</p>
+                            <div class="note note-tip"><span>Enable comments in Teams to gather quick feedback on shared files, ensuring seamless collaboration without switching apps.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-rocket"></i></div>
+                            <h3 class="tool-title">Time Savers</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Use keyboard shortcuts and templates to speed up your workflow across Microsoft 365.</p>
+                            <div class="note note-shortcut"><span>Press <strong>Ctrl + Shift + T</strong> in Planner to instantly add tasks, reducing navigation time in busy projects.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="integration-guide">
+                <h2 class="section-title">Integration Guide</h2>
+                <div class="tool-grid">
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-link"></i></div>
+                            <h3 class="tool-title">Teams + Planner</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Integrate Planner in Teams to manage tasks within channels for seamless project tracking.</p>
+                            <div class="note note-tip"><span>Add Planner as a tab in Teams channels to view and update tasks without leaving the conversation, streamlining project management.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-table"></i></div>
+                            <h3 class="tool-title">Excel + Power BI</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Import Excel data into Power BI for advanced visualizations and insights.</p>
+                            <div class="note note-tip"><span>Use "Get Data" in Power BI to connect Excel files, enabling dynamic dashboards that update with your spreadsheet changes.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-cloud"></i></div>
+                            <h3 class="tool-title">OneDrive + Office</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Sync files across Word, Excel, and PowerPoint with OneDrive for real-time collaboration.</p>
+                            <div class="note note-tip"><span>Share files directly from OneDrive within Teams to ensure team members always access the latest document versions.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="collaboration-corner">
+                <h2 class="section-title">Collaboration Corner</h2>
+                <div class="tool-grid">
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-users-cog"></i></div>
+                            <h3 class="tool-title">Teams + OneNote</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Combine Teams and OneNote for seamless meeting notes and team collaboration.</p>
+                            <div class="note note-tip"><span>Add OneNote as a tab in Teams to take real-time meeting notes, syncing automatically across devices for team access.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-file-alt"></i></div>
+                            <h3 class="tool-title">Word + Teams</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Collaborate on Word documents directly within Teams channels.</p>
+                            <div class="note note-tip"><span>Upload Word files to Teams and use co-authoring to edit in real time, ensuring all team members stay aligned.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-share-alt"></i></div>
+                            <h3 class="tool-title">SharePoint + Office</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Use SharePoint to centralize Office documents for team access.</p>
+                            <div class="note note-tip"><span>Integrate SharePoint libraries with Teams to access Word, Excel, and PowerPoint files, streamlining document management.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="automation-station">
+                <h2 class="section-title">Automation Station</h2>
+                <div class="tool-grid">
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-cogs"></i></div>
+                            <h3 class="tool-title">Power Automate Basics</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Automate repetitive tasks across Microsoft 365 apps with Power Automate.</p>
+                            <div class="note note-tip"><span>Create flows to automate email responses in Outlook or task assignments in Planner, saving time on routine processes.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-code"></i></div>
+                            <h3 class="tool-title">Excel Macros</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Record macros in Excel to automate data processing tasks.</p>
+                            <div class="note note-tip"><span>Use "View" > "Macros" > "Record Macro" to automate repetitive formatting or calculations, boosting efficiency.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-robot"></i></div>
+                            <h3 class="tool-title">Outlook Rules</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Set up rules in Outlook to automate email organization.</p>
+                            <div class="note note-tip"><span>Create rules via "File" > "Manage Rules & Alerts" to sort emails into folders or forward them automatically.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="creative-spark">
+                <h2 class="section-title">Creative Spark</h2>
+                <div class="tool-grid">
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-paint-brush"></i></div>
+                            <h3 class="tool-title">PowerPoint Design</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Create stunning slides with PowerPoint’s Designer AI and animations.</p>
+                            <div class="note note-tip"><span>Use "Design" > "Designer" to generate professional slide layouts instantly, enhancing visual appeal with minimal effort.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-desktop"></i></div>
+                            <h3 class="tool-title">Publisher Layouts</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Design eye-catching brochures and newsletters with Publisher.</p>
+                            <div class="note note-tip"><span>Start with templates in "File" > "New" to create polished marketing materials quickly, perfect for events or campaigns.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-image"></i></div>
+                            <h3 class="tool-title">Canva + Office</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Enhance Office documents with Canva graphics via integration.</p>
+                            <div class="note note-tip"><span>Import Canva designs into Word or PowerPoint via "Insert" > "Picture" to add professional visuals to your documents.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="tutorials">
+                <h2 class="section-title">Quick Start Tutorials</h2>
+                <div class="tool-grid">
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-book-open"></i></div>
+                            <h3 class="tool-title">Word Basics</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Learn to format documents, use templates, and collaborate in Word.</p>
+                            <div class="note note-tip"><span>Start with "File" > "New" to explore templates, which provide pre-formatted layouts for reports, resumes, and more, saving setup time.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-chalkboard"></i></div>
+                            <h3 class="tool-title">Excel Essentials</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Master formulas, charts, and PivotTables for data analysis.</p>
+                            <div class="note note-tip"><span>Use "Insert" > "PivotTable" to quickly summarize large datasets, making it easier to analyze trends and patterns.</span></div>
+                        </div>
+                    </div>
+                    <div class="tool-card fade-in-up">
+                        <div class="tool-header">
+                            <div class="tool-icon"><i class="fas fa-video"></i></div>
+                            <h3 class="tool-title">Teams Meetings</h3>
+                        </div>
+                        <div class="tool-content">
+                            <p class="tool-description">Set up and manage video calls with Teams for effective collaboration.</p>
+                            <div class="note note-tip"><span>Use "Calendar" to schedule meetings with customizable settings, ensuring smooth virtual collaboration with colleagues.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="detail-overlay" id="detailOverlay">
+            <div class="detail-container" id="detailContainer">
+                <h3 class="detail-title" id="detailTitle"></h3>
+                <div class="detail-content" id="detailContent"></div>
+                <button class="close-btn" onclick="closeDetail()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Built with passion by <a href="https://sisco-ask.vercel.app/" target="_blank">Sisco Ask</a> | © 2025
+    </footer>
+
+    <script>
+        const toolDetails = {
+            word: {
+                title: "Microsoft Word: Professional Document Creation",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Microsoft Word is the ultimate word processing tool for creating polished reports, resumes, and collaborative documents with advanced formatting.</p>
+                        <div class="note note-tip"><span>Create professional templates using "File" > "New" to streamline recurring document creation, ensuring consistency across projects like reports or proposals.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + Shift + S</strong> to quickly save a document as a new version, perfect for iterative drafts.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Styles Pane</strong>: Ensure consistent formatting with "Home" > "Styles".</li>
+                            <li><strong>Mail Merge</strong>: Personalize bulk documents via "Mailings" > "Start Mail Merge".</li>
+                            <li><strong>Track Changes</strong>: Monitor edits with "Review" > "Track Changes".</li>
+                            <li><strong>Smart Lookup</strong>: Research terms instantly by right-clicking and selecting "Smart Lookup".</li>
+                            <li><strong>Dictation</strong>: Use "Home" > "Dictate" for hands-free typing.</li>
+                            <li><strong>Version History</strong>: Restore past versions via "File" > "Info" > "Version History".</li>
+                            <li><strong>Focus Mode</strong>: Eliminate distractions with "View" > "Focus".</li>
+                            <li><strong>Table of Contents</strong>: Auto-generate navigation via "References" > "Table of Contents".</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + F</strong> to open the Navigation Pane, allowing quick searches and navigation within large documents.</span></div>
+                        <div class="note note-warning"><span>Save frequently to avoid losing changes in collaborative documents, especially when multiple users are editing simultaneously.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Learn how to navigate Word’s UI and perform common tasks:</p>
+                        <ul class="detail-list">
+                            <li><strong>Ribbon Tabs</strong>: The top toolbar includes tabs like "Home" (formatting), "Insert" (add elements), and "Review" (collaboration). Click each tab to access tools.</li>
+                            <li><strong>Quick Access Toolbar</strong>: Located at the top-left, customize it via the dropdown to add frequent commands like "Save" or "Undo".</li>
+                            <li><strong>Creating a Document</strong>: Go to "File" > "New", select a template or blank document, and start typing. Use "Home" > "Styles" to apply headings.</li>
+                            <li><strong>Formatting Text</strong>: Select text, use "Home" > "Font" or "Paragraph" groups to adjust size, alignment, or spacing.</li>
+                            <li><strong>Collaboration</strong>: Click "Share" (top-right), save to OneDrive, and invite collaborators. Use "Review" > "Track Changes" to monitor edits.</li>
+                            <li><strong>Inserting Elements</strong>: Use "Insert" > "Pictures" or "Table" to add visuals or data tables. Adjust via the context menu that appears.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Click "View" > "Navigation Pane" to see document structure, making it easy to jump between sections in long documents.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Create custom styles for branded documents to maintain consistency across your organization.</li>
+                            <li>Embed Excel tables via "Insert" > "Object" for dynamic data integration in reports.</li>
+                            <li>Utilize "Developer" tab to add interactive form controls for user-friendly documents.</li>
+                            <li>Link to OneNote for integrated note-taking during document creation.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "References" > "Table of Contents" to auto-generate navigation for long documents, updating dynamically as you edit.</span></div>
+                        <div class="note note-warning"><span>Check compatibility when sharing documents with older Word versions to avoid formatting issues.</span></div>
+                    </div>
+                `
+            },
+            powerpoint: {
+                title: "Microsoft PowerPoint: Dynamic Presentations",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>PowerPoint empowers you to create engaging presentations with AI-driven design, animations, and collaboration tools.</p>
+                        <div class="note note-tip"><span>Use Designer AI in "Design" > "Designer" to instantly generate professional slide layouts, saving time on design tasks.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>F5</strong> to start a slideshow instantly, perfect for quick previews during preparation.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Designer AI</strong>: Get slide suggestions via "Design" > "Designer".</li>
+                            <li><strong>Morph Transition</strong>: Create smooth animations with "Transitions" > "Morph".</li>
+                            <li><strong>Slide Master</strong>: Customize layouts in "View" > "Slide Master".</li>
+                            <li><strong>SmartArt</strong>: Insert diagrams via "Insert" > "SmartArt".</li>
+                            <li><strong>Presenter View</strong>: Control slides with "Slide Show" > "Presenter View".</li>
+                            <li><strong>Export to Video</strong>: Save as MP4 via "File" > "Export" > "Create a Video".</li>
+                            <li><strong>3D Models</strong>: Add immersive visuals via "Insert" > "3D Models".</li>
+                            <li><strong>Zoom</strong>: Create interactive summaries with "Insert" > "Zoom".</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + M</strong> to add a new slide quickly, maintaining your workflow momentum.</span></div>
+                        <div class="note note-warning"><span>Limit animations to avoid overwhelming your audience, as excessive effects can distract from your message.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate PowerPoint’s UI and create a presentation:</p>
+                        <ul class="detail-list">
+                            <li><strong>Ribbon Tabs</strong>: Use "Home" for basic formatting, "Insert" for media, and "Design" for layouts. Click tabs to explore tools.</li>
+                            <li><strong>Slide Pane</strong>: On the left, view and rearrange slides. Right-click to add or delete slides.</li>
+                            <li><strong>Creating a Presentation</strong>: Go to "File" > "New", choose a template or blank presentation, then add slides via "Home" > "New Slide".</li>
+                            <li><strong>Adding Content</strong>: Click slide placeholders to add text or images. Use "Insert" > "Pictures" or "SmartArt" for visuals.</li>
+                            <li><strong>Applying Transitions</strong>: Select a slide, go to "Transitions", choose an effect like "Fade", and adjust timing.</li>
+                            <li><strong>Presenting</strong>: Press "F5" to start or use "Slide Show" > "From Current Slide". Enable "Presenter View" for notes and controls.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Design" > "Themes" to apply consistent styles across slides, ensuring a professional look.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Use high-contrast colors and 5-7 lines per slide for readability.</li>
+                            <li>Rehearse timings with "Slide Show" > "Rehearse Timings" to sync animations.</li>
+                            <li>Embed videos via "Insert" > "Video" for engaging content.</li>
+                            <li>Save custom themes in "Design" > "Themes" for branding.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Slide Sorter" view to reorganize slides quickly, ensuring a logical flow for your presentation.</span></div>
+                        <div class="note note-warning"><span>Test Presenter View on the target device to ensure compatibility with your setup.</span></div>
+                    </div>
+                `
+            },
+            excel: {
+                title: "Microsoft Excel: Data Analysis Powerhouse",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Excel is a versatile tool for data analysis, visualization, and automation, perfect for business and personal use.</p>
+                        <div class="note note-tip"><span>Use PivotTables in "Insert" > "PivotTable" to quickly summarize large datasets, enabling rapid insights into trends and patterns.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + T</strong> to convert data into a table, simplifying sorting and filtering tasks.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>PivotTables</strong>: Summarize data via "Insert" > "PivotTable".</li>
+                            <li><strong>VLOOKUP</strong>: Use <code>=VLOOKUP(value, table, col_index)</code> for lookups.</li>
+                            <li><strong>Conditional Formatting</strong>: Highlight data with "Home" > "Conditional Formatting".</li>
+                            <li><strong>Flash Fill</strong>: Auto-fill patterns via "Data" > "Flash Fill".</li>
+                            <li><strong>Power Query</strong>: Import and transform data with "Data" > "Get & Transform".</li>
+                            <li><strong>XLOOKUP</strong>: Use <code>=XLOOKUP(value, lookup_range, return_range)</code> for advanced lookups.</li>
+                            <li><strong>Charts</strong>: Create visuals via "Insert" > "Recommended Charts".</li>
+                            <li><strong>Ideas</strong>: Get AI-driven insights via "Home" > "Ideas".</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + Shift + L</strong> to toggle filters, making data exploration faster and more intuitive.</span></div>
+                        <div class="note note-warning"><span>Double-check formulas to avoid calculation errors, especially in complex spreadsheets with multiple dependencies.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Master Excel’s UI and analyze data effectively:</p>
+                        <ul class="detail-list">
+                            <li><strong>Ribbon Tabs</strong>: Use "Home" for formatting, "Insert" for charts, and "Data" for analysis tools. Click tabs to access features.</li>
+                            <li><strong>Formula Bar</strong>: Above the grid, enter formulas like <code>=SUM(A1:A10)</code> to calculate totals.</li>
+                            <li><strong>Creating a Spreadsheet</strong>: Open Excel, enter data in cells (e.g., A1, B2), and format using "Home" > "Number Format".</li>
+                            <li><strong>Using Formulas</strong>: Type <code>=</code> in a cell, then select a function like <code>SUM</code> or <code>VLOOKUP</code>. Use the "Formulas" tab for guidance.</li>
+                            <li><strong>Creating Charts</strong>: Select data, go to "Insert" > "Recommended Charts", choose a chart type, and customize via the "Chart Design" tab.</li>
+                            <li><strong>PivotTables</strong>: Select data, go to "Insert" > "PivotTable", drag fields to rows/columns, and analyze trends.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Data" > "Sort & Filter" to organize data, making it easier to find specific entries.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Add slicers to PivotTables with "Insert" > "Slicer" for interactive filtering.</li>
+                            <li>Record macros via "View" > "Macros" > "Record Macro" for automation.</li>
+                            <li>Create dynamic charts with named ranges for real-time updates.</li>
+                            <li>Link Excel to OneDrive for collaborative data sharing.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Data" > "Data Validation" to restrict input types, ensuring data accuracy in shared workbooks.</span></div>
+                        <div class="note note-warning"><span>Save backups before running macros to prevent unintended data changes.</span></div>
+                    </div>
+                `
+            },
+            teams: {
+                title: "Microsoft Teams: Collaboration Redefined",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Teams is a collaboration hub for chat, video calls, and app integration, streamlining team workflows.</p>
+                        <div class="note note-tip"><span>Use channels to organize discussions by project or topic, keeping conversations focused and easily accessible.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + Shift + C</strong> to start a call quickly, ideal for urgent team check-ins.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Meetings</strong>: Schedule via "Calendar" or start instant calls with "Calls".</li>
+                            <li><strong>Channels</strong>: Organize discussions with team-specific channels.</li>
+                            <li><strong>Breakout Rooms</strong>: Manage meetings via "More Actions" > "Breakout Rooms".</li>
+                            <li><strong>Whiteboard</strong>: Collaborate visually with "Share" > "Microsoft Whiteboard".</li>
+                            <li><strong>Polls</strong>: Create polls via "Forms" in meetings for feedback.</li>
+                            <li><strong>Apps</strong>: Integrate tools like Planner via "Apps".</li>
+                            <li><strong>Live Captions</strong>: Enable real-time captions in meetings for accessibility.</li>
+                            <li><strong>Reactions</strong>: Use live reactions in meetings for engagement.</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + .</strong> to show available keyboard shortcuts in Teams for faster navigation.</span></div>
+                        <div class="note note-warning"><span>Check microphone and camera settings before joining meetings to avoid technical issues during calls.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate Teams’ UI and collaborate effectively:</p>
+                        <ul class="detail-list">
+                            <li><strong>Sidebar</strong>: On the left, access "Activity" (notifications), "Chat" (messages), "Teams" (channels), and "Calendar" (meetings).</li>
+                            <li><strong>Starting a Chat</strong>: Click "Chat", select a contact, and type your message. Use "@" to mention someone.</li>
+                            <li><strong>Creating a Team</strong>: Go to "Teams", click "Join or create a team", and set up channels for projects.</li>
+                            <li><strong>Scheduling a Meeting</strong>: In "Calendar", click "New meeting", add details, and invite attendees.</li>
+                            <li><strong>Sharing Files</strong>: In a channel, go to "Files" tab, click "Upload", and share via OneDrive for collaboration.</li>
+                            <li><strong>Using Apps</strong>: Click "Apps" in the sidebar, add tools like Planner, and pin them to channels.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Add a Planner tab in a channel via "Add a tab" to track tasks without leaving Teams.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Pin important channels with the "Pin" option for quick access.</li>
+                            <li>Use "@" mentions to notify specific team members.</li>
+                            <li>Customize backgrounds in "Background Effects" for professional calls.</li>
+                            <li>Record meetings via "More Actions" > "Start Recording" for later review.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Integrate PowerPoint for live slide sharing in meetings, enhancing presentations with real-time collaboration.</span></div>
+                        <div class="note note-warning"><span>Ensure recordings are stored securely in OneDrive to comply with data privacy policies.</span></div>
+                    </div>
+                `
+            },
+            outlook: {
+                title: "Microsoft Outlook: Streamlined Communication",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Outlook organizes emails, calendars, and tasks with smart features for efficient communication.</p>
+                        <div class="note note-tip"><span>Use Focused Inbox in "View" > "Show Focused Inbox" to prioritize critical emails, reducing inbox clutter.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + Shift + M</strong> to compose a new email instantly, streamlining communication.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Focused Inbox</strong>: Prioritize emails with "View" > "Show Focused Inbox".</li>
+                            <li><strong>Rules</strong>: Automate sorting via "File" > "Manage Rules & Alerts".</li>
+                            <li><strong>Quick Steps</strong>: Streamline tasks with "Home" > "Quick Steps".</li>
+                            <li><strong>Sweep</strong>: Clean inboxes with "View" > "Sweep".</li>
+                            <li><strong>Calendar Sharing</strong>: Share schedules via "Calendar" > "Share Calendar".</li>
+                            <li><strong>Add-Ins</strong>: Enhance with tools like Grammarly via "Store".</li>
+                            <li><strong>Categories</strong>: Organize emails with color-coded tags via "Categorize".</li>
+                            <li><strong>Clutter</strong>: Filter low-priority emails with "View" > "Clutter".</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + R</strong> to reply to emails quickly, keeping conversations efficient.</span></div>
+                        <div class="note note-warning"><span>Back up important emails to avoid data loss, especially when archiving or moving to cloud storage.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate Outlook’s UI and manage communications:</p>
+                        <ul class="detail-list">
+                            <li><strong>Navigation Pane</strong>: On the left, switch between "Mail", "Calendar", "Contacts", and "Tasks". Click to view each module.</li>
+                            <li><strong>Composing Emails</strong>: Click "New Email" in "Home" tab, enter recipient, subject, and message, then click "Send".</li>
+                            <li><strong>Organizing Emails</strong>: Use "Home" > "Categorize" to tag emails or "Rules" to auto-sort into folders.</li>
+                            <li><strong>Managing Calendar</strong>: In "Calendar", click a date to add an event, set reminders, and invite attendees.</li>
+                            <li><strong>Tasks</strong>: In "Tasks", click "New Task", set due dates, and mark completion status.</li>
+                            <li><strong>Search</strong>: Use the search bar above the inbox to find emails with keywords or filters.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Create a Quick Step in "Home" > "Quick Steps" to automate repetitive email actions like forwarding.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Schedule emails with "Options" > "Delay Delivery" for optimal timing.</li>
+                            <li>Filter spam by right-clicking and selecting "Junk".</li>
+                            <li>Create custom Quick Steps for repetitive tasks like forwarding emails.</li>
+                            <li>Use "Tasks" to link emails to actionable items.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Integrate Outlook with Teams to schedule meetings directly from email threads, saving time on coordination.</span></div>
+                        <div class="note note-warning"><span>Review rule settings regularly to ensure automated actions align with current priorities.</span></div>
+                    </div>
+                `
+            },
+            onenote: {
+                title: "Microsoft OneNote: Digital Note-Taking",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>OneNote is a flexible digital notebook for capturing, organizing, and syncing ideas across devices.</p>
+                        <div class="note note-tip"><span>Use tags in "Home" > "Tags" to mark tasks and ideas, making it easy to track action items across notebooks.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Win + N</strong> to create a quick note, ideal for capturing ideas on the go.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Sections & Pages</strong>: Create structured notes via "File" > "New".</li>
+                            <li><strong>Tags</strong>: Mark tasks with "Home" > "Tags" (e.g., "To Do").</li>
+                            <li><strong>Audio Notes</strong>: Record audio via "Insert" > "Audio".</li>
+                            <li><strong>Ink to Text</strong>: Convert handwriting with "Draw" > "Ink to Text".</li>
+                            <li><strong>Web Clipper</strong>: Save web content with the OneNote Web Clipper.</li>
+                            <li><strong>Syncing</strong>: Save to OneDrive for cross-device access.</li>
+                            <li><strong>Search</strong>: Find notes with "Ctrl + E" across notebooks.</li>
+                            <li><strong>Templates</strong>: Use pre-built pages via "Insert" > "Page Templates".</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + Shift + T</strong> to create a new section, organizing notes efficiently.</span></div>
+                        <div class="note note-warning"><span>Ensure notebooks are synced to OneDrive to avoid data conflicts across devices.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate OneNote’s UI and organize notes effectively:</p>
+                        <ul class="detail-list">
+                            <li><strong>Notebook Pane</strong>: On the left, view notebooks, sections, and pages. Click to navigate or right-click to add new sections/pages.</li>
+                            <li><strong>Creating Notes</strong>: Select a page, type directly, or use "Insert" > "Table" for structured notes.</li>
+                            <li><strong>Tagging Notes</strong>: In "Home" > "Tags", apply tags like "To Do" or "Important" to prioritize tasks.</li>
+                            <li><strong>Inserting Media</strong>: Use "Insert" > "Pictures" or "Audio" to add visuals or recordings to notes.</li>
+                            <li><strong>Handwriting</strong>: In "Draw" tab, sketch with a stylus, then use "Ink to Text" to convert to text.</li>
+                            <li><strong>Syncing</strong>: Save to OneDrive via "File" > "Share" to access notes across devices.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "View" > "Dock to Desktop" to keep OneNote visible while working in other apps.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Embed files like PDFs via "Insert" > "File" for rich notes.</li>
+                            <li>Use "Home" > "Find Tags" to track tasks across notes.</li>
+                            <li>Link notes to Outlook tasks for integrated planning.</li>
+                            <li>Create custom tags for project-specific organization.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use the "Draw" tab to sketch ideas directly in notes, perfect for brainstorming or diagramming workflows.</span></div>
+                        <div class="note note-warning"><span>Regularly back up notebooks to avoid losing unsynced changes during network issues.</span></div>
+                    </div>
+                `
+            },
+            access: {
+                title: "Microsoft Access: Database Management",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Access is a powerful tool for building and managing databases for small to medium projects.</p>
+                        <div class="note note-tip"><span>Use templates in "File" > "New" to quickly set up databases for common tasks like inventory or contact management, saving setup time.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>F11</strong> to toggle the Navigation Pane, providing quick access to all database objects.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Tables</strong>: Create data tables via "Create" > "Table".</li>
+                            <li><strong>Queries</strong>: Filter data with "Create" > "Query Design".</li>
+                            <li><strong>Forms</strong>: Build user-friendly forms via "Create" > "Form".</li>
+                            <li><strong>Reports</strong>: Generate summaries with "Create" > "Report".</li>
+                            <li><strong>Relationships</strong>: Link tables via "Database Tools" > "Relationships".</li>
+                            <li><strong>Macros</strong>: Automate tasks with "Create" > "Macro".</li>
+                            <li><strong>Import/Export</strong>: Integrate data via "External Data" > "New Data Source".</li>
+                            <li><strong>Validation Rules</strong>: Set data rules in "Table Design" for accuracy.</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + Enter</strong> in Query Design to run queries quickly, speeding up data analysis.</span></div>
+                        <div class="note note-warning"><span>Back up databases before making structural changes to avoid data loss during modifications.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate Access’s UI and manage databases:</p>
+                        <ul class="detail-list">
+                            <li><strong>Navigation Pane</strong>: On the left, view tables, queries, forms, and reports. Right-click to create or edit objects.</li>
+                            <li><strong>Creating a Table</strong>: Go to "Create" > "Table", add fields in Design View, and set data types (e.g., Text, Number).</li>
+                            <li><strong>Building Queries</strong>: In "Create" > "Query Design", select tables, add fields, and set criteria to filter data.</li>
+                            <li><strong>Creating Forms</strong>: Use "Create" > "Form Wizard" to build user-friendly data entry forms.</li>
+                            <li><strong>Generating Reports</strong>: In "Create" > "Report", select a table/query, and customize layout for summaries.</li>
+                            <li><strong>Relationships</strong>: In "Database Tools" > "Relationships", drag fields to link tables for data integrity.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Create" > "Query Wizard" for guided query creation, ideal for beginners.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Use "Database Tools" > "Compact and Repair" to optimize performance.</li>
+                            <li>Encrypt databases with "File" > "Info" > "Encrypt with Password".</li>
+                            <li>Create calculated fields in queries for dynamic data processing.</li>
+                            <li>Link Access to SharePoint for cloud-based data sharing.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use the "Form Wizard" to create user-friendly data entry forms, reducing errors in data input.</span></div>
+                        <div class="note note-warning"><span>Test queries thoroughly to ensure they return accurate results before using them in reports.</span></div>
+                    </div>
+                `
+            },
+            publisher: {
+                title: "Microsoft Publisher: Stunning Publications",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Publisher is a desktop publishing tool for creating professional brochures, newsletters, and marketing materials.</p>
+                        <div class="note note-tip"><span>Start with pre-designed templates in "File" > "New" to create polished layouts for brochures or flyers in minutes.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + Shift + G</strong> to toggle guides, aiding precise alignment of design elements in Publisher.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Templates</strong>: Access pre-built designs via "File" > "New".</li>
+                            <li><strong>Text Frames</strong>: Add text boxes via "Insert" > "Draw Text Box".</li>
+                            <li><strong>Design Checker</strong>: Ensure quality with "File" > "Info" > "Design Checker".</li>
+                            <li><strong>Picture Tools</strong>: Enhance images via "Picture Format" contextual tab.</li>
+                            <li><strong>Mail Merge</strong>: Personalize publications with "Mailings" > "Mail Merge".</li>
+                            <li><strong>Master Pages</strong>: Set consistent layouts via "View" > "Master Page".</li>
+                            <li><strong>Export Options</strong>: Save as PDF via "File" > "Export" > "Create PDF/XPS".</li>
+                            <li><strong>Typography</strong>: Adjust fonts and styles via "Home" > "Font".</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + M</strong> to merge objects, simplifying complex designs.</span></div>
+                        <div class="note note-warning"><span>Preview publications before printing to avoid alignment or color issues.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate Publisher’s UI and create professional publications:</p>
+                        <ul class="detail-list">
+                            <li><strong>Ribbon Tabs</strong>: Use "Home" for text formatting, "Insert" for adding elements, and "Page Design" for layouts. Click tabs to explore tools.</li>
+                            <li><strong>Creating a Publication</strong>: Go to "File" > "New", select a template (e.g., brochure), and customize placeholders.</li>
+                            <li><strong>Adding Text</strong>: Click "Insert" > "Draw Text Box", type content, and format using "Home" > "Font".</li>
+                            <li><strong>Inserting Images</strong>: Use "Insert" > "Pictures", then adjust with "Picture Format" tools for cropping or effects.</li>
+                            <li><strong>Aligning Elements</strong>: Enable guides with "Ctrl + Shift + G" and use "Arrange" > "Align" to position objects precisely.</li>
+                            <li><strong>Exporting</strong>: Save as PDF via "File" > "Export" > "Create PDF/XPS" for sharing or printing.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Page Design" > "Master Page" to set consistent headers/footers across pages.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Use "Design Checker" to catch layout errors before finalizing.</li>
+                            <li>Link text boxes via "Text Box Tools" > "Link" for continuous text flow.</li>
+                            <li>Incorporate brand colors via "Page Design" > "Color Scheme".</li>
+                            <li>Export high-resolution PDFs for professional printing.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Group objects with "Home" > "Group" to move or resize multiple elements together.</span></div>
+                        <div class="note note-warning"><span>Check printer compatibility when exporting to ensure accurate color reproduction.</span></div>
+                    </div>
+                `
+            },
+            forms: {
+                title: "Microsoft Forms: Surveys & Quizzes",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Forms enables creation of surveys, quizzes, and polls with real-time response tracking for feedback collection.</p>
+                        <div class="note note-tip"><span>Add branching via "More options" > "Add branching" to create dynamic forms tailored to responses.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + S</strong> to save forms frequently, ensuring progress is not lost.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Question Types</strong>: Add via "Add new" (e.g., multiple choice, text).</li>
+                            <li><strong>Branching</strong>: Customize paths with "More options" > "Add branching".</li>
+                            <li><strong>Themes</strong>: Customize look via "Theme" button.</li>
+                            <li><strong>Responses</strong>: View analytics in "Responses" tab.</li>
+                            <li><strong>Sharing</strong>: Share via QR code or link in "Share" menu.</li>
+                            <li><strong>Excel Export</strong>: Export data via "Responses" > "Open in Excel".</li>
+                            <li><strong>Anonymous Responses</strong>: Toggle in "Settings" for privacy.</li>
+                            <li><strong>Quiz Scoring</strong>: Set points in "More options" for auto-grading.</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + P</strong> to preview forms, ensuring they look correct before sharing.</span></div>
+                        <div class="note note-warning"><span>Limit access in "Settings" to prevent unauthorized responses.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate Forms’ UI and create surveys/quizzes:</p>
+                        <ul class="detail-list">
+                            <li><strong>Main Interface</strong>: Access forms via the Forms web app. Use "New Form" or "New Quiz" to start.</li>
+                            <li><strong>Adding Questions</strong>: Click "Add new", select question type (e.g., Choice, Text), and enter details.</li>
+                            <li><strong>Customizing Forms</strong>: Use "Theme" to adjust colors, and "Preview" to test functionality.</li>
+                            <li><strong>Setting Up Quizzes</strong>: Add questions, set correct answers, and enable points in "More options".</li>
+                            <li><strong>Sharing Forms</strong>: Click "Share", choose a link or QR code, and distribute to respondents.</li>
+                            <li><strong>Analyzing Responses</strong>: Go to "Responses" tab to view charts or export to Excel.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Settings" to limit responses to specific users for controlled data collection.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Use branching to create personalized survey paths.</li>
+                            <li>Embed forms in Teams via "Add a tab" for team feedback.</li>
+                            <li>Analyze trends in Excel after exporting responses.</li>
+                            <li>Add images to questions via "Add media" for engagement.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Share forms via QR codes for easy mobile access during events or classes.</span></div>
+                        <div class="note note-warning"><span>Review response settings to ensure data privacy compliance.</span></div>
+                    </div>
+                `
+            },
+            powerbi: {
+                title: "Microsoft Power BI: Data Visualization",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Power BI transforms raw data into interactive dashboards and reports for actionable insights.</p>
+                        <div class="note note-tip"><span>Use "Get Data" to connect Excel or cloud sources, enabling dynamic dashboards.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + Shift + D</strong> to duplicate visuals, speeding up dashboard creation.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Data Import</strong>: Connect sources via "Get Data".</li>
+                            <li><strong>Visualizations</strong>: Add charts via "Visualizations" pane.</li>
+                            <li><strong>DAX</strong>: Create calculated fields with Data Analysis Expressions.</li>
+                            <li><strong>Filters</strong>: Apply filters via "Filters" pane for dynamic views.</li>
+                            <li><strong>Power Query</strong>: Transform data with "Transform Data".</li>
+                            <li><strong>Drillthrough</strong>: Enable detailed views via "Modeling" > "Drillthrough".</li>
+                            <li><strong>Publish</strong>: Share reports via "Home" > "Publish".</li>
+                            <li><strong>Q&A</strong>: Use natural language queries in "Q&A" feature.</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + E</strong> to open Power Query Editor for advanced data transformations.</span></div>
+                        <div class="note note-warning"><span>Verify data sources to ensure accuracy before publishing reports.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate Power BI’s UI and create dashboards:</p>
+                        <ul class="detail-list">
+                            <li><strong>Main Interface</strong>: Use the left sidebar for "Report", "Data", and "Model" views. The "Visualizations" pane is on the right.</li>
+                            <li><strong>Importing Data</strong>: Click "Get Data", select a source (e.g., Excel), and load data.</li>
+                            <li><strong>Creating Visuals</strong>: In "Report" view, select a visual (e.g., Bar Chart) from "Visualizations", then drag fields to configure.</li>
+                            <li><strong>Filtering Data</strong>: Use the "Filters" pane to apply filters at page or visual level.</li>
+                            <li><strong>Transforming Data</strong>: Click "Transform Data" to clean or reshape data in Power Query.</li>
+                            <li><strong>Sharing Dashboards</strong>: Click "Publish" to share reports via Power BI Service.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Bookmarks" to save dashboard views for quick presentations.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Use "Slicers" in reports for interactive data filtering.</li>
+                            <li>Create custom visuals with "Developer" tools for unique needs.</li>
+                            <li>Schedule data refreshes in Power BI Service for real-time updates.</li>
+                            <li>Integrate with Teams for collaborative reporting.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "Q&A" to ask questions like “Show sales by region” for instant visuals.</span></div>
+                        <div class="note note-warning"><span>Secure shared reports with access controls in Power BI Service.</span></div>
+                    </div>
+                `
+            },
+            planner: {
+                title: "Microsoft Planner: Task Management",
+                content: `
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Overview</h4>
+                        <p>Planner organizes tasks and projects with visual boards, ideal for team collaboration.</p>
+                        <div class="note note-tip"><span>Use "Board" view to drag tasks between columns, simplifying status updates.</span></div>
+                        <div class="note note-shortcut"><span>Press <strong>Ctrl + Shift + T</strong> to add a new task quickly.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Key Features</h4>
+                        <ul class="detail-list">
+                            <li><strong>Plans</strong>: Create plans via "New Plan" in Planner hub.</li>
+                            <li><strong>Buckets</strong>: Organize tasks with "Add Bucket".</li>
+                            <li><strong>Tasks</strong>: Add tasks with "Add Task" in buckets.</li>
+                            <li><strong>Labels</strong>: Tag tasks via task details for categorization.</li>
+                            <li><strong>Charts</strong>: View progress in "Charts" view.</li>
+                            <li><strong>Schedule</strong>: See tasks in calendar via "Schedule" view.</li>
+                            <li><strong>Attachments</strong>: Add files via task details.</li>
+                            <li><strong>Notifications</strong>: Get updates via Teams or email.</li>
+                        </ul>
+                        <div class="note note-shortcut"><span>Use <strong>Ctrl + F</strong> to search tasks across plans.</span></div>
+                        <div class="note note-warning"><span>Assign tasks clearly to avoid confusion in team projects.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Practical Guide</h4>
+                        <p>Navigate Planner’s UI and manage tasks:</p>
+                        <ul class="detail-list">
+                            <li><strong>Main Interface</strong>: Access via Teams or the Planner web app. View plans in the sidebar.</li>
+                            <li><strong>Creating a Plan</strong>: Click "New Plan", name it, and add to a Teams channel if needed.</li>
+                            <li><strong>Adding Tasks</strong>: In a plan, click "Add Task", set title, due date, and assign members.</li>
+                            <li><strong>Organizing Tasks</strong>: Create buckets via "Add Bucket", then drag tasks to categorize.</li>
+                            <li><strong>Tracking Progress</strong>: Use "Charts" view to see task completion rates or "Schedule" for a calendar view.</li>
+                            <li><strong>Collaborating</strong>: Add comments or attachments in task details for team updates.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Integrate Planner with Teams by adding it as a tab for seamless task management.</span></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4 class="detail-subheader">Pro Tips</h4>
+                        <ul class="detail-list">
+                            <li>Use labels to prioritize tasks visually.</li>
+                            <li>Copy plans for recurring projects via "Copy Plan".</li>
+                            <li>Filter tasks by due date or assignee for focus.</li>
+                            <li>Export plans to Excel for detailed reporting.</li>
+                        </ul>
+                        <div class="note note-tip"><span>Use "My Tasks" view to see all tasks assigned to you across plans.</span></div>
+                        <div class="note note-warning"><span>Archive completed plans to keep the Planner hub organized.</span></div>
+                    </div>
+                `
+            }
+        };
+function initializeApp() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const body = document.body;
+        const toggleIcon = document.querySelector('.mode-toggle i');
+        body.dataset.theme = savedTheme;
+        if (savedTheme === 'night') {
+            toggleIcon.classList.remove('fa-sun');
+            toggleIcon.classList.add('fa-moon');
+        } else {
+            toggleIcon.classList.remove('fa-moon');
+            toggleIcon.classList.add('fa-sun');
+        }
+        createCosmicBackground();
+        setupEventListeners();
+        checkScroll();
+    }
+
+    function createCosmicBackground() {
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = `${Math.random() * 3 + 1}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            star.style.animationDuration = `${Math.random() * 3 + 3}s`;
+            starsContainer.appendChild(star);
+        }
+        for (let i = 0; i < 3; i++) {
+            const nebula = document.createElement('div');
+            nebula.className = 'nebula';
+            nebula.style.width = `${Math.random() * 200 + 100}px`;
+            nebula.style.height = nebula.style.width;
+            nebula.style.left = `${Math.random() * 100}%`;
+            nebula.style.top = `${Math.random() * 100}%`;
+            nebula.style.animationDelay = `${Math.random() * 10}s`;
+            starsContainer.appendChild(nebula);
+        }
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const toggleIcon = document.querySelector('.mode-toggle i');
+        if (body.dataset.theme === 'light') {
+            body.dataset.theme = 'night';
+            toggleIcon.classList.remove('fa-sun');
+            toggleIcon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'night');
+        } else {
+            body.dataset.theme = 'light';
+            toggleIcon.classList.remove('fa-moon');
+            toggleIcon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'light');
+        }
+        console.log('Background color:', getComputedStyle(document.documentElement).getPropertyValue('--background'));
+    }
+
+    function setupEventListeners() {
+        const modeToggle = document.querySelector('.mode-toggle');
+        console.log('Mode toggle element:', modeToggle);
+        if (modeToggle) {
+            modeToggle.addEventListener('click', toggleTheme);
+        }
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.classList.contains('tool-link') || e.target.closest('.tool-link')) return;
+                const tool = card.dataset.tool;
+                toggleDetail(tool);
+            });
+        });
+        window.addEventListener('scroll', checkScroll);
+        document.getElementById('detailOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('detailOverlay')) {
+                closeDetail();
+            }
+        });
+    }
+
+    function toggleDetail(tool) {
+        const overlay = document.getElementById('detailOverlay');
+        const container = document.getElementById('detailContainer');
+        const title = document.getElementById('detailTitle');
+        const content = document.getElementById('detailContent');
+
+        if (toolDetails[tool]) {
+            title.textContent = toolDetails[tool].title;
+            content.innerHTML = toolDetails[tool].content;
+            overlay.style.display = 'flex';
+            container.scrollTop = 0;
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeDetail() {
+        const overlay = document.getElementById('detailOverlay');
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function searchTools() {
+        const searchTerm = document.getElementById('search').value.toLowerCase();
+        const cards = document.querySelectorAll('.tool-card');
+        cards.forEach(card => {
+            const title = card.querySelector('.tool-title').textContent.toLowerCase();
+            const description = card.querySelector('.tool-description').textContent.toLowerCase();
+            card.style.display = title.includes(searchTerm) || description.includes(searchTerm) ? 'block' : 'none';
+        });
+    }
+
+    function checkScroll() {
+        const elements = document.querySelectorAll('.tool-card');
+        elements.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.9 && rect.bottom > 0) {
+                element.classList.add('fade-in-up');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
